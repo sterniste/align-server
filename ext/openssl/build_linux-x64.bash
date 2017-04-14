@@ -5,12 +5,13 @@ if [ ! -d "$OPENSSL_SRC_DIR" ]; then
     exit 1
 fi
 
-export TARGET_DIR=$PWD/../prefix_linux-x64
-export BUILD_DIR=$PWD/build
+TARGET_DIR=$PWD/../prefix_linux-x64
+BUILD_DIR=$PWD/build
 if [ -d $BUILD_DIR ]; then
    rm -rf $BUILD_DIR
 fi
 cp -r $OPENSSL_SRC_DIR $BUILD_DIR
 
 cd $BUILD_DIR
-./config shared --prefix=$TARGET_DIR && make && make install
+./config shared --prefix=$TARGET_DIR \
+&& make install
