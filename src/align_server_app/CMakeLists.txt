@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
-project(task_list_app CXX)
+project(align_server_app CXX)
 
 file(GLOB CC_FILES *.cc)
 
