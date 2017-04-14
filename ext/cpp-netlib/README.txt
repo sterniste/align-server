@@ -11,4 +11,4 @@ Where {{PREFIX}} represents your target platform (either "unix-x64", or "w64-min
 and {{SRCDIR}} is the directory in which the cpp-netlib Git repo was just cloned.
 
 Afterwards, verify that the cpp-netlib static libraries have been installed in
-../prefix_{{PREFIX}}/lib, and the cpp-netlib header files in ../prefix_{{PREFIX}}/include/boot/network.
+../prefix_{{PREFIX}}/lib, and the cpp-netlib header files in ../prefix_{{PREFIX}}/include/boost/network.

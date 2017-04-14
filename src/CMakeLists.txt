@@ -13,10 +13,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-DLEVEL_LOGGING -DBOOST_LOG_DYN_LINK -D__USE_W32_SOCKETS)
 
 add_subdirectory(universals) # a static library (depends on INCLUDES: Boost)
-add_subdirectory(jwt_verify) # a static library (depends on INCLUDES: Boost, openssl, universals)
+add_subdirectory(jwt_verify) # a static library (depends on INCLUDES: Boost, openssl, json, universals)
 add_subdirectory(align_server_app) # a static library (depends on INCLUDES: Boost, cpp-netlib, jwt_verify, universals)
 
-add_subdirectory(main) # ia_core_ape executable (depends on INCLUDES: Boost, universals, align_server_app; LIBS: cpp-netlib, openssl, ICU4C, Boost, universals, jwt_verify, align_server_app)
+add_subdirectory(main) # ia_core_ape executable (depends on INCLUDES: Boost, universals, align_server_app; LIBS: cpp-netlib, json, openssl, ICU4C, Boost, universals, jwt_verify, align_server_app)
 
 # add a target to generate API documentation with Doxygen
 find_package(Doxygen)
