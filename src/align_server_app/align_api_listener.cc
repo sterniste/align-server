@@ -70,5 +70,5 @@ align_api_listener::make_port_str(uint16_t port) {
   return oss.str();
 }
 
-align_api_listener::align_api_listener(const string& ip_addr, uint16_t port, const string& cert_chain_file, const string& priv_key_file, const string& tmp_dh_file) : port_str{make_port_str(port)}, align_http_server{*this, ip_addr, port_str, cert_chain_file, priv_key_file, tmp_dh_file} {}
+align_api_listener::align_api_listener(const string& ip_addr, uint16_t port, const string& cert_chain_file, const string& priv_key_file, const string& tmp_dh_file) : align_http_server{*this, ip_addr, make_port_str(port), cert_chain_file, priv_key_file, tmp_dh_file} {}
 }

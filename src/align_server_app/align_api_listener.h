@@ -36,8 +36,6 @@ class align_http_server : public boost::network::http::server<align_api_handler>
 class align_api_listener : private align_api_handler, public align_http_server {
   static std::string make_port_str(uint16_t port);
 
-  std::string port_str;
-
   public :
    align_api_listener(const std::string& ip_addr, uint16_t port, const std::string& cert_chain_file, const std::string& priv_key_file, const std::string& tmp_dh_file);
 };
