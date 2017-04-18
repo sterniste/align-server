@@ -14,7 +14,7 @@ struct options_exception : public std::runtime_error {
 };
 
 struct options {
-  const std::string host;
+  const char* const host;
   const uint16_t port;
   const std::string ssl_cert_chain_file;
   const std::string ssl_priv_key_file;

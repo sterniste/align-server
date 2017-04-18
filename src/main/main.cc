@@ -19,7 +19,7 @@ main(int argc, const char* argv[]) {
     const options opts{options_parser{argc, argv}.parse_options()};
     log_info_start(argc, argv);
 
-    align_server_app app{opts.host.c_str(), opts.port, opts.ssl_cert_chain_file.c_str(), opts.ssl_priv_key_file.c_str(), opts.ssl_tmp_dh_file.c_str()};
+    align_server_app app{opts.host, opts.port, opts.ssl_cert_chain_file.c_str(), opts.ssl_priv_key_file.c_str(), opts.ssl_tmp_dh_file.c_str()};
     this_thread::sleep_for(3600s);
   } catch (const options_exception& e) {
     if (e.not_an_error) {

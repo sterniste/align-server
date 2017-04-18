@@ -27,6 +27,7 @@ fi
 if [ -n "${CMAKE_C_COMPILER+set}" ]; then
   opts+=("-DCMAKE_C_COMPILER=$CMAKE_C_COMPILER")
 fi
+opts+=("-DCMAKE_BUILD_TYPE=Debug")
 opts+=("-DICU4C_LIB_DIR=$top_dir/ext/prefix_$PREFIX/lib")
 opts+=("-DBOOST_INCLUDE_DIR=$top_dir/ext/prefix_$PREFIX/include")
 opts+=("-DBOOST_LIB_DIR=$top_dir/ext/prefix_$PREFIX/lib")
