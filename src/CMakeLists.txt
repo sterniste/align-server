@@ -10,7 +10,10 @@ find_package(IWYU)
 # once for all subprojects
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-add_compile_options(-DLEVEL_LOGGING -UBOOST_LOG_DYN_LINK -D__USE_W32_SOCKETS)
+add_compile_options(-DLEVEL_LOGGING -UBOOST_LOG_DYN_LINK)
+if (WIN32)
+  add_compile_options(-D__USE_W32_SOCKETS -D_WIN32_WINNT=0x0501)
+endif()
 
 add_subdirectory(universals) # a static library (depends on INCLUDES: Boost)
 add_subdirectory(jwt_verify) # a static library (depends on INCLUDES: Boost, openssl, json, universals)

@@ -25,7 +25,7 @@ using namespace boost::asio;
 using namespace boost::network;
 using namespace universals;
 
-void align_api_handler::operator()(const http_request& req, http_response& resp) {
+void align_api_handler::operator()(const http_request& req, connection_ptr& conn_ptr) {
   try {
   } catch (const unauthorized_http_request_exception& e) {
   } catch (const exception& e) { log_info_tee(cout, string{"caught exception: "} + e.what()); } catch (...) {
@@ -61,15 +61,13 @@ align_http_server::make_server_options(align_api_handler& api_handler, const cha
 
 align_http_server::align_http_server(align_api_handler& api_handler, const char* host, const char* port_cstr, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file) : http::server<align_api_handler>{make_server_options(api_handler, host, port_cstr, cert_chain_file, priv_key_file, tmp_dh_file)} {}
 
-string
+unique_ptr<string>
 align_api_listener::make_port_str(uint16_t port) {
   ostringstream oss;
   oss << port;
-  return string{oss.str()};
+  return make_unique<string>(oss.str());
 }
 
-align_api_listener::align_api_listener(const char* host, uint16_t port, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file) {
-  const string port_str{make_port_str(port)};
-  http_server = make_shared<align_http_server>(*this, host, port_str.c_str(), cert_chain_file, priv_key_file, tmp_dh_file);
+align_api_listener::align_api_listener(const char* host, uint16_t port, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file) : align_http_server{*this, host, make_port_str(port)->c_str(), cert_chain_file, priv_key_file, tmp_dh_file} {
 }
 }

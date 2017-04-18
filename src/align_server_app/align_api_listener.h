@@ -7,7 +7,6 @@
 
 #include <boost/asio/ssl.hpp>
 #include <boost/network/include/http/server.hpp>
-#include <boost/network/protocol/http/response.hpp>
 
 namespace align_server {
 
@@ -17,11 +16,11 @@ struct unauthorized_http_request_exception : public std::runtime_error {
 
 class align_api_handler;
 using http_request = boost::network::http::server<align_api_handler>::request;
-using http_response = boost::network::http::basic_response<align_api_handler>;
+using connection_ptr = boost::network::http::server<align_api_handler>::connection_ptr;
 
 class align_api_handler {
  public:
-  void operator()(const http_request& req, http_response& resp);
+  void operator()(const http_request& req, connection_ptr& conn_ptr);
 };
 
 class align_http_server : public boost::network::http::server<align_api_handler> {
@@ -34,15 +33,11 @@ class align_http_server : public boost::network::http::server<align_api_handler>
   align_http_server(align_api_handler& api_handler, const char* host, const char* port_cstr, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file);
 };
 
-class align_api_listener : private align_api_handler {
-  static std::string make_port_str(uint16_t port);
+class align_api_listener : private align_api_handler, public align_http_server {
+  static std::unique_ptr<std::string> make_port_str(uint16_t port);
 
-  std::shared_ptr<align_http_server> http_server;
-  
   public :
    align_api_listener(const char* host, uint16_t port, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file);
-
-   void run() { http_server->run(); }   
 };
 }
 #endif
