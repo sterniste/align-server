@@ -2,6 +2,7 @@
 #define ALIGN_SERVER_APP_H
 
 #include <cstdint>
+#include <string>
 
 #include "align_api_listener.h"
 
@@ -11,7 +12,7 @@ class align_server_app {
   align_api_listener api_listener;
 
  public:
-  align_server_app(const char* host, uint16_t port, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file);
+  align_server_app(const std::string& ip_addr, uint16_t port, const std::string& cert_chain_file, const std::string& priv_key_file, const std::string& tmp_dh_file);
 };
 }
 #endif

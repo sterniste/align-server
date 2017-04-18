@@ -14,13 +14,13 @@ struct options_exception : public std::runtime_error {
 };
 
 struct options {
-  const char* const host;
+  const std::string ip_addr;
   const uint16_t port;
   const std::string ssl_cert_chain_file;
   const std::string ssl_priv_key_file;
   const std::string ssl_tmp_dh_file;
 
-  options(const char* host, uint16_t port, const char* ssl_cert_chain_file, const char* ssl_priv_key_file, const char* ssl_tmp_dh_file) : host{host}, port{port}, ssl_cert_chain_file{ssl_cert_chain_file}, ssl_priv_key_file{ssl_priv_key_file}, ssl_tmp_dh_file{ssl_tmp_dh_file} {}
+  options(const std::string& ip_addr, uint16_t port, const std::string& ssl_cert_chain_file, const std::string& ssl_priv_key_file, const std::string& ssl_tmp_dh_file) : ip_addr{ip_addr}, port{port}, ssl_cert_chain_file{ssl_cert_chain_file}, ssl_priv_key_file{ssl_priv_key_file}, ssl_tmp_dh_file{ssl_tmp_dh_file} {}
 };
 
 class options_parser {
