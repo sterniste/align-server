@@ -20,7 +20,7 @@ add_executable(test-json_web_token ${CC_FILES})
 if (WIN32)
   target_link_libraries(test-json_web_token jwt_verify universals ssl crypto "${gmock_BINARY_DIR}/libgmock.a" "${gtest_BINARY_DIR}/libgtest.a" -lpthread crypt32.lib ws2_32.lib wsock32.lib)
 else()
-  target_link_libraries(test-json_web_token jwt_verify universals ssl crypto "${gmock_BINARY_DIR}/libgmock.a" "${gtest_BINARY_DIR}/libgtest.a" -lpthread)
+  target_link_libraries(test-json_web_token jwt_verify universals ssl crypto "${gmock_BINARY_DIR}/libgmock.a" "${gtest_BINARY_DIR}/libgtest.a" -lpthread -ldl)
 endif()
 
 add_test(NAME test-json_web_token COMMAND test-json_web_token)

@@ -6,8 +6,7 @@
 #include <string>
 
 #include <boost/asio/ssl.hpp>
-#include <boost/network/protocol/http.hpp>
-//#include <boost/network/protocol/http/server/options.hpp>
+#include <boost/network/include/http/server.hpp>
 
 #include <level_logging.h>
 
@@ -73,8 +72,5 @@ align_api_listener::make_port_str(uint16_t port) {
   return oss.str();
 }
 
-align_api_listener::align_api_listener(const char* host, uint16_t port, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file) {
-  const string port_str{make_port_str(port)};
-  http_server = make_unique<align_http_server>(static_cast<align_api_handler&>(*this), host, port_str.c_str(), cert_chain_file, priv_key_file, tmp_dh_file);
-}
+align_api_listener::align_api_listener(const char* host, uint16_t port, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file) : port_str{make_port_str(port)}, align_http_server{*this, host, port_str.c_str(), cert_chain_file, priv_key_file, tmp_dh_file} {}
 }

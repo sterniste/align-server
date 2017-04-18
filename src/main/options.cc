@@ -92,6 +92,6 @@ options_parser::parse_options() {
   if (!exists(ssl_tmp_dh_file) || !is_regular_file(ssl_tmp_dh_file))
     throw options_exception{string{"can't find SSL temporary DH file '"} + ssl_tmp_dh_file + '\''};
 
-  return options{ip_addr.c_str(), var_map["port"].as<uint16_t>(), ssl_cert_chain_file, ssl_priv_key_file, ssl_tmp_dh_file};
+  return options{ip_addr.empty() ? nullptr : ip_addr.c_str(), var_map["port"].as<uint16_t>(), ssl_cert_chain_file, ssl_priv_key_file, ssl_tmp_dh_file};
 }
 }
