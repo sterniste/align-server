@@ -20,7 +20,7 @@ using connection_ptr = boost::network::http::server<align_api_handler>::connecti
 
 class align_api_handler {
  public:
-  void operator()(const http_request& req, connection_ptr& conn_ptr);
+  void operator()(const http_request& req, const connection_ptr& conn_ptr);
 };
 
 class align_http_server : public boost::network::http::server<align_api_handler> {

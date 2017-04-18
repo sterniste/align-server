@@ -25,7 +25,7 @@ using namespace boost::asio;
 using namespace boost::network;
 using namespace universals;
 
-void align_api_handler::operator()(const http_request& req, connection_ptr& conn_ptr) {
+void align_api_handler::operator()(const http_request& req, const connection_ptr& conn_ptr) {
   try {
   } catch (const unauthorized_http_request_exception& e) {
   } catch (const exception& e) { log_info_tee(cout, string{"caught exception: "} + e.what()); } catch (...) {

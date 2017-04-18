@@ -44,6 +44,9 @@ set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${OPENSSL_LIB_DIR}/libssl
 add_library(crypto STATIC IMPORTED)
 set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${OPENSSL_LIB_DIR}/libcrypto.a)
 
+
+add_library(cppnetlib-server-parsers STATIC IMPORTED)
+set_target_properties(cppnetlib-uri PROPERTIES IMPORTED_LOCATION ${CPP_NETLIB_LIB_DIR}/libcppnetlib-server-parsers.a)
 add_library(cppnetlib-uri STATIC IMPORTED)
 set_target_properties(cppnetlib-uri PROPERTIES IMPORTED_LOCATION ${CPP_NETLIB_LIB_DIR}/libcppnetlib-uri.a)
 
@@ -55,4 +58,4 @@ if (BUILD_IWYU)
   set_property(TARGET align_server PROPERTY CXX_INCLUDE_WHAT_YOU_USE ${iwyu})
 endif()
 
-target_link_libraries(align_server align_server_app jwt_verify universals cppnetlib-uri ssl crypto boost_date_time boost_random boost_regex boost_chrono boost_atomic boost_log boost_log_setup boost_program_options boost_filesystem boost_system boost_thread icu4c_i18n icu4c_uc icu4c_data ${CMAKE_THREAD_LIBS_INIT} -ldl)
+target_link_libraries(align_server align_server_app jwt_verify universals cppnetlib-server-parsers cppnetlib-uri ssl crypto boost_date_time boost_random boost_regex boost_chrono boost_atomic boost_log boost_log_setup boost_program_options boost_filesystem boost_system boost_thread icu4c_i18n icu4c_uc icu4c_data ${CMAKE_THREAD_LIBS_INIT} -ldl)
