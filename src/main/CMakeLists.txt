@@ -46,7 +46,7 @@ set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${OPENSSL_LIB_DIR}/lib
 
 
 add_library(cppnetlib-server-parsers STATIC IMPORTED)
-set_target_properties(cppnetlib-uri PROPERTIES IMPORTED_LOCATION ${CPP_NETLIB_LIB_DIR}/libcppnetlib-server-parsers.a)
+set_target_properties(cppnetlib-server-parsers PROPERTIES IMPORTED_LOCATION ${CPP_NETLIB_LIB_DIR}/libcppnetlib-server-parsers.a)
 add_library(cppnetlib-uri STATIC IMPORTED)
 set_target_properties(cppnetlib-uri PROPERTIES IMPORTED_LOCATION ${CPP_NETLIB_LIB_DIR}/libcppnetlib-uri.a)
 
