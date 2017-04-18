@@ -4,7 +4,7 @@ project(align_server_app CXX)
 
 file(GLOB CC_FILES *.cc)
 
-include_directories(${BOOST_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR} ${asio_https_INCLUDE_DIRS} ${jwt_verify_INCLUDE_DIRS} ${universals_INCLUDE_DIRS})
+include_directories(${BOOST_INCLUDE_DIR} ${CPP_NETLIB_INCLUDE_DIR} ${jwt_verify_INCLUDE_DIRS} ${universals_INCLUDE_DIRS})
 
 add_library(${PROJECT_NAME} STATIC ${CC_FILES})
 
@@ -21,6 +21,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(${PROJECT_NAME})
 
 # Expose definitions to other subprojects through cache variable.
-set(${PROJECT_NAME}_DEFINITIONS ${universals_DEFINITIONS} ${jwt_verify_DEFINITIONS} ${asio_https_DEFINITIONS} CACHE INTERNAL "${PROJECT_NAME}: Definitions" FORCE)
-# Expose public includes (e.g. Boost, asio_https, jwt_verify, universals; transitively) to other subprojects through cache variable.
-set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR} ${BOOST_INCLUDE_DIR} ${universals_INCLUDE_DIRS} ${asio_https_INCLUDE_DIRS} ${jwt_verify_INCLUDE_DIRS} CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
+set(${PROJECT_NAME}_DEFINITIONS ${universals_DEFINITIONS} ${jwt_verify_DEFINITIONS} CACHE INTERNAL "${PROJECT_NAME}: Definitions" FORCE)
+# Expose public includes (e.g. Boost, cpp-netlib, jwt_verify, universals; transitively) to other subprojects through cache variable.
+set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR} ${BOOST_INCLUDE_DIR} ${CPP_NETLIB_INCLUDE_DIR} ${universals_INCLUDE_DIRS} ${jwt_verify_INCLUDE_DIR} CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)

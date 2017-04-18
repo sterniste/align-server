@@ -16,7 +16,7 @@
 
 #include "options.h"
 
-namespace task_list {
+namespace align_server {
 using namespace std;
 using namespace boost;
 using namespace boost::filesystem;
@@ -33,7 +33,7 @@ options_parser::parse_options() {
   cmd_line_opts_desc.add_options()("help", "this help message")("config-file,c", value<string>(), "configuration file");
 
   options_description config_file_opts_desc("Configuration options");
-  config_file_opts_desc.add_options()("port,p", value<uint16_t>()->default_value(8888), "listener port")("ssl-cert-chain-file", value<string>()->default_value("server.crt"), "SSL certificate chain file")("ssl-priv-key-file", value<string>()->default_value("server.key"), "SSL private key file")("ssl-tmp-dh-file", value<string>()->default_value("dh512.pem"), "SSL temporary DH file")
+  config_file_opts_desc.add_options()("ip-addr,i", value<string>(), "listener IP address")("port,p", value<uint16_t>()->default_value(8888), "listener port")("ssl-cert-chain-file", value<string>()->default_value("server.crt"), "SSL certificate chain file")("ssl-priv-key-file", value<string>()->default_value("server.key"), "SSL private key file")("ssl-tmp-dh-file", value<string>()->default_value("dh512.pem"), "SSL temporary DH file")
 #ifdef LEVEL_LOGGING
   ("logs-dir", value<string>()->default_value("task_list_logs"), "logs dir")("log-level", value<string>()->default_value("info"), "log level: [fatal, error, warn, info, debug, trace]")
 #endif
@@ -76,6 +76,9 @@ options_parser::parse_options() {
   // logging setup
   init_logging(var_map["logs-dir"].as<string>().c_str(), level);
 #endif
+  string ip_addr;
+  if (var_map.count("ip-addr"))
+    ip_addr = var_map["ip-addr"].as<string>();
 
   const char* const ssl_cert_chain_file = var_map["ssl-cert-chain-file"].as<string>().c_str();
   if (!exists(ssl_cert_chain_file) || !is_regular_file(ssl_cert_chain_file))
@@ -89,6 +92,6 @@ options_parser::parse_options() {
   if (!exists(ssl_tmp_dh_file) || !is_regular_file(ssl_tmp_dh_file))
     throw options_exception{string{"can't find SSL temporary DH file '"} + ssl_tmp_dh_file + '\''};
 
-  return options{var_map["port"].as<uint16_t>(), ssl_cert_chain_file, ssl_priv_key_file, ssl_tmp_dh_file};
+  return options{ip_addr.c_str(), var_map["port"].as<uint16_t>(), ssl_cert_chain_file, ssl_priv_key_file, ssl_tmp_dh_file};
 }
 }

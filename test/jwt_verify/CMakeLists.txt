@@ -6,16 +6,14 @@ file(GLOB CC_FILES *.cc)
 
 include_directories("${gtest_SOURCE_DIR}/include" "${gmock_SOURCE_DIR}/include")
 
-include_directories(${BOOST_INCLUDE_DIR} ${openssl_INCLUDE_DIRS} ${json_INCLUDE_DIRS} ${universals_INCLUDE_DIRS})
+include_directories(${BOOST_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR} ${JSON_INCLUDE_DIR} ${universals_INCLUDE_DIRS})
 
 add_library(ssl SHARED IMPORTED)
 set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${OPENSSL_LIB_DIR}/libssl.so)
 add_library(crypto SHARED IMPORTED)
 set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${OPENSSL_LIB_DIR}/libcrypto.so)
 
-include_directories(${universals_INCLUDE_DIRS})
-
-include_directories(${jwt_verify_INCLUDE_DIRS})
+include_directories(${universals_INCLUDE_DIRS} ${jwt_verify_INCLUDE_DIRS})
 
 add_executable(test-json_web_token ${CC_FILES})
 

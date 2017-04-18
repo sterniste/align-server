@@ -4,7 +4,7 @@ project(jwt_verify CXX)
 
 file(GLOB CC_FILES *.cc)
 
-include_directories(${BOOST_INCLUDE_DIR} ${openssl_INCLUDE_DIRS} ${json_INCLUDE_DIRS} ${universals_INCLUDE_DIRS})
+include_directories(${BOOST_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR} ${JSON_INCLUDE_DIR} ${universals_INCLUDE_DIRS})
 
 add_library(${PROJECT_NAME} STATIC ${CC_FILES})
 

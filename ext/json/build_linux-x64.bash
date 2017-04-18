@@ -13,4 +13,4 @@ fi
 mkdir $BUILD_DIR
 
 cd $BUILD_DIR
-cmake3 -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER} -DCMAKE_INSTALL_PREFIX=$TARGET_DIR ../$JSON_SRC_DIR && make && make install
+cmake3 -DCMAKE_INSTALL_PREFIX=$TARGET_DIR ../$JSON_SRC_DIR && make && make install

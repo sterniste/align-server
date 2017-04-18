@@ -2,7 +2,7 @@
 #include <iostream>
 #include <thread>
 
-#include <https_listener.h>
+#include <align_server_app.h>
 #include <level_logging.h>
 
 #include "options.h"
@@ -10,7 +10,7 @@
 namespace {
 using namespace std;
 using namespace universals;
-using namespace task_list;
+using namespace align_server;
 }
 
 int
@@ -19,7 +19,7 @@ main(int argc, const char* argv[]) {
     const options opts{options_parser{argc, argv}.parse_options()};
     log_info_start(argc, argv);
 
-    https_listener listener{opts.port, opts.ssl_cert_chain_file.c_str(), opts.ssl_priv_key_file.c_str(), opts.ssl_tmp_dh_file.c_str()};
+    align_server_app app{opts.host.c_str(), opts.port, opts.ssl_cert_chain_file.c_str(), opts.ssl_priv_key_file.c_str(), opts.ssl_tmp_dh_file.c_str()};
     this_thread::sleep_for(3600s);
   } catch (const options_exception& e) {
     if (e.not_an_error) {

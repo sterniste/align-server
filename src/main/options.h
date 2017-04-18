@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace task_list {
+namespace align_server {
 
 struct options_exception : public std::runtime_error {
   bool not_an_error;
@@ -14,12 +14,13 @@ struct options_exception : public std::runtime_error {
 };
 
 struct options {
+  const std::string host;
   const uint16_t port;
   const std::string ssl_cert_chain_file;
   const std::string ssl_priv_key_file;
   const std::string ssl_tmp_dh_file;
 
-  options(uint16_t port, const char* ssl_cert_chain_file, const char* ssl_priv_key_file, const char* ssl_tmp_dh_file) : port{port}, ssl_cert_chain_file{ssl_cert_chain_file}, ssl_priv_key_file{ssl_priv_key_file}, ssl_tmp_dh_file{ssl_tmp_dh_file} {}
+  options(const char* host, uint16_t port, const char* ssl_cert_chain_file, const char* ssl_priv_key_file, const char* ssl_tmp_dh_file) : host{host}, port{port}, ssl_cert_chain_file{ssl_cert_chain_file}, ssl_priv_key_file{ssl_priv_key_file}, ssl_tmp_dh_file{ssl_tmp_dh_file} {}
 };
 
 class options_parser {
