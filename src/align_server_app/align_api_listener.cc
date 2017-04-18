@@ -17,7 +17,8 @@ namespace align_server {
 using namespace std;
 using std::exception;
 using std::make_shared;
-    using std::ostringstream;
+using std::make_unique;
+using std::ostringstream;
 using std::shared_ptr;
 using std::string;
 using namespace boost;
@@ -25,7 +26,8 @@ using namespace boost::asio;
 using namespace boost::network;
 using namespace universals;
 
-void align_api_handler::operator()(const http_request& req, const connection_ptr& conn_ptr) {
+void
+align_api_handler::operator()(const http_request& req, const connection_ptr& conn_ptr) {
   try {
   } catch (const unauthorized_http_request_exception& e) {
   } catch (const exception& e) { log_info_tee(cout, string{"caught exception: "} + e.what()); } catch (...) {
@@ -56,18 +58,23 @@ align_http_server::make_ssl_context(const char* cert_chain_file, const char* pri
 
 align_http_server::options
 align_http_server::make_server_options(align_api_handler& api_handler, const char* host, const char* port_cstr, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file) {
-  return align_http_server::options{api_handler}.address(host).port(port_cstr).reuse_address(true).thread_pool(make_thread_pool()).context(make_ssl_context(cert_chain_file, priv_key_file, tmp_dh_file));
+  if (host)
+    return align_http_server::options{api_handler}.address(host).port(port_cstr).reuse_address(true).thread_pool(make_thread_pool()).context(make_ssl_context(cert_chain_file, priv_key_file, tmp_dh_file));
+  else
+    return align_http_server::options{api_handler}.port(port_cstr).reuse_address(true).thread_pool(make_thread_pool()).context(make_ssl_context(cert_chain_file, priv_key_file, tmp_dh_file));
 }
 
 align_http_server::align_http_server(align_api_handler& api_handler, const char* host, const char* port_cstr, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file) : http::server<align_api_handler>{make_server_options(api_handler, host, port_cstr, cert_chain_file, priv_key_file, tmp_dh_file)} {}
 
-unique_ptr<string>
+string
 align_api_listener::make_port_str(uint16_t port) {
   ostringstream oss;
   oss << port;
-  return make_unique<string>(oss.str());
+  return oss.str();
 }
 
-align_api_listener::align_api_listener(const char* host, uint16_t port, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file) : align_http_server{*this, host, make_port_str(port)->c_str(), cert_chain_file, priv_key_file, tmp_dh_file} {
+align_api_listener::align_api_listener(const char* host, uint16_t port, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file) {
+  const string port_str{make_port_str(port)};
+  http_server = make_unique<align_http_server>(static_cast<align_api_handler&>(*this), host, port_str.c_str(), cert_chain_file, priv_key_file, tmp_dh_file);
 }
 }

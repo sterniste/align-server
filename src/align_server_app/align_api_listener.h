@@ -33,11 +33,15 @@ class align_http_server : public boost::network::http::server<align_api_handler>
   align_http_server(align_api_handler& api_handler, const char* host, const char* port_cstr, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file);
 };
 
-class align_api_listener : private align_api_handler, public align_http_server {
-  static std::unique_ptr<std::string> make_port_str(uint16_t port);
+class align_api_listener : private align_api_handler {
+  static std::string make_port_str(uint16_t port);
+
+  std::unique_ptr<align_http_server> http_server;
 
   public :
    align_api_listener(const char* host, uint16_t port, const char* cert_chain_file, const char* priv_key_file, const char* tmp_dh_file);
+
+   void run() { http_server->run(); }
 };
 }
 #endif
