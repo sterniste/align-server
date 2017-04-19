@@ -17,7 +17,11 @@ include_directories(${universals_INCLUDE_DIRS} ${jwt_verify_INCLUDE_DIRS})
 
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 set(BUILD_SHARED_LIBRARIES OFF)
-set(CMAKE_EXE_LINKER_FLAGS "-static")
+if (WIN32)
+  set(CMAKE_EXE_LINKER_FLAGS "-static")
+else()
+  set(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc")
+endif()
 add_executable(test-json_web_token ${CC_FILES})
 
 if (WIN32)

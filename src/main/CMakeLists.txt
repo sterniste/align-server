@@ -51,6 +51,13 @@ set_target_properties(cppnetlib-uri PROPERTIES IMPORTED_LOCATION ${CPP_NETLIB_LI
 
 include_directories(${universals_INCLUDE_DIRS})
 
+set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+set(BUILD_SHARED_LIBRARIES OFF)
+if (WIN32)
+  set(CMAKE_EXE_LINKER_FLAGS "-static")
+else()
+  set(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc")
+endif()
 add_executable(align_server ${CC_FILES})
 
 if (BUILD_IWYU)
