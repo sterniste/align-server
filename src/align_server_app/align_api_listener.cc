@@ -65,9 +65,7 @@ align_http_server::align_http_server(align_api_handler& api_handler, const strin
 
 string
 align_api_listener::make_port_str(uint16_t port) {
-  ostringstream oss;
-  oss << port;
-  return oss.str();
+  return static_cast<ostringstream&>(ostringstream{} << port).str();
 }
 
 align_api_listener::align_api_listener(const string& ip_addr, uint16_t port, const string& cert_chain_file, const string& priv_key_file, const string& tmp_dh_file) : align_http_server{*this, ip_addr, make_port_str(port), cert_chain_file, priv_key_file, tmp_dh_file} {}

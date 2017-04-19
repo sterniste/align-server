@@ -44,7 +44,6 @@ set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${OPENSSL_LIB_DIR}/libssl
 add_library(crypto STATIC IMPORTED)
 set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${OPENSSL_LIB_DIR}/libcrypto.a)
 
-
 add_library(cppnetlib-server-parsers STATIC IMPORTED)
 set_target_properties(cppnetlib-server-parsers PROPERTIES IMPORTED_LOCATION ${CPP_NETLIB_LIB_DIR}/libcppnetlib-server-parsers.a)
 add_library(cppnetlib-uri STATIC IMPORTED)
