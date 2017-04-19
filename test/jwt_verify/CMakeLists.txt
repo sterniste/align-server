@@ -6,9 +6,7 @@ file(GLOB CC_FILES *.cc)
 
 find_package(Threads REQUIRED)
 
-include_directories("${gtest_SOURCE_DIR}/include" "${gmock_SOURCE_DIR}/include")
-
-include_directories(${BOOST_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR} ${JSON_INCLUDE_DIR} ${universals_INCLUDE_DIRS})
+include_directories("${gtest_SOURCE_DIR}/include" "${gmock_SOURCE_DIR}/include" ${BOOST_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR} ${JSON_INCLUDE_DIR} ${universals_INCLUDE_DIRS})
 
 add_library(ssl STATIC IMPORTED)
 set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${OPENSSL_LIB_DIR}/libssl.a)
